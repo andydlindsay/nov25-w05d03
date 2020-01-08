@@ -48,11 +48,24 @@ client
         break;
 
       case 'add':
-
+        const villainName = process.argv.slice(2)[1];
+        const movieName = process.argv.slice(2)[2];
+        client
+          .query('INSERT INTO movie_villains (villain, movie) VALUES ($1, $2);', [villainName, movieName])
+          .then(() => {
+            console.log('villain inserted');
+            client.end();
+          });
         break;
 
       case 'delete':
-
+        id = process.argv.slice(2)[1];
+        client
+          .query('DELETE FROM movie_villains WHERE id = $1;', [id])
+          .then(() => {
+            console.log('villain destroyed');
+            client.end();
+          });
         break;
 
       default:
